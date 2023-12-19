@@ -1,7 +1,7 @@
 // routes/cars.js
 const express = require('express');
 const router = express.Router();
-const Car = require('../../back-end/models/Car');
+const Car = require('../models/Cars')
 
 // Create
 router.post('/cars', async (req, res) => {
@@ -24,7 +24,7 @@ router.get('/cars', async (req, res) => {
 });
 
 // Update
-router.put('/cars/:id', async (req, res) => {
+router.put('/cars/id', async (req, res) => {
   try {
     const updatedCar = await Car.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json(updatedCar);

@@ -11,7 +11,6 @@ const Home = () => {
 
     const [cars, setCars] = useState(initialCars);
     const [isModalVisible, setIsModalVisible] = useState(false);
-  //  const [showAddCarForm, setShowAddCarForm] = useState(false);
     const [selectedCar, setSelectedCar] = useState(null); 
       
       // You can use this 'cars' array in your application for testing or initial data.
@@ -25,6 +24,7 @@ const Home = () => {
     const handleUpdateCar = (updatedCar) => {
       const updatedCars = cars.map((car) => 
       car === selectedCar ? { ...car, ...updatedCar } : car );
+
       setCars(updatedCars);
       setIsModalVisible(false);
       setSelectedCar(null)

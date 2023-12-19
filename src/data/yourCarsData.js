@@ -1,4 +1,5 @@
-// dummy data for cars
+// // dummy data for cars
+// export const cars = [
 export const cars = [
     {
         make: 'Toyota',
