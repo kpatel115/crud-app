@@ -6,7 +6,7 @@ import { Card, Button, Typography } from 'antd';
 const { Meta } = Card;
 const { Title } = Typography;
 
-const CarList = ({ cars }) => {
+const CarList = ({ cars, onEdit, onDelete }) => {
   return (
     <div>
       <Title level={3}>All Cars</Title>
@@ -23,8 +23,9 @@ const CarList = ({ cars }) => {
             <p>Transmission Type: {car.transmissionType}</p>
             <p>Fuel Type: {car.fuelType}</p>
             <p>Seller Contact: {car.sellerContact}</p>
-            <Button>Update</Button>
-            <Button>Delete</Button>
+
+            <Button onClick={() => onEdit(car)}>Update</Button>
+            <Button onClick={() => onDelete(car)}>Delete</Button>
           </Card>
         ))}
       </div>
