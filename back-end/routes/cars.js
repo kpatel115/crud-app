@@ -1,7 +1,7 @@
 // routes/cars.js
 const express = require('express');
 const router = express.Router();
-const Car = require('../models/Car');
+const Car = require('../../back-end/models/Car');
 
 // Create
 router.post('/cars', async (req, res) => {
