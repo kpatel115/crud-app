@@ -31,6 +31,7 @@ const Home = () => {
     };
 
     const handleDeleteCar = () => {
+      console.log('Deleting Car: ', selectedCar);
       const updatedCars = cars.filter((car) => car !== selectedCar);
       setCars(updatedCars);
       setIsModalVisible(false);

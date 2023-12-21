@@ -22,6 +22,15 @@ router.get('/cars', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+// read specific car
+router.get('/cars/id', async (req, res) => {
+  try {
+    const cars = await Car.findById();
+    res.json(cars);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 // Update
 router.put('/cars/id', async (req, res) => {
@@ -34,7 +43,7 @@ router.put('/cars/id', async (req, res) => {
 });
 
 // Delete
-router.delete('/cars/:id', async (req, res) => {
+router.delete('/cars/id', async (req, res) => {
   try {
     const deletedCar = await Car.findByIdAndRemove(req.params.id);
     res.json(deletedCar);
