@@ -5,8 +5,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors')
 const router = require('./routes/cars')
 
-const { MongoClient } = require('mongodb');
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -17,6 +15,7 @@ app.use(bodyParser.json());
 // MongoDB connection
 
 const mongoURI = 'mongodb+srv://kpatel114:R7tvHnASCDmCJToZ@carcollection.chb2apw.mongodb.net/CarCollection?retryWrites=true&w=majority'
+
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Get the default connection
@@ -24,7 +23,6 @@ const db = mongoose.connection;
 
 // Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
 // Once the connection is open, log a success message
 db.once('open', () => {
   console.log('Connected to MongoDB successfully');

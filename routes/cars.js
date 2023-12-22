@@ -13,15 +13,18 @@ router.post('/cars', async (req, res) => {
   }
 });
 
+
 // Read
 router.get('/cars', async (req, res) => {
   try {
-    const cars = await Car.find();
-    res.json(cars);
+    const allCars = await Car.find()
+    res.json(allCars)
   } catch (error) {
+    console.error('Error retrieving all cars: ', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 // read specific car
 router.get('/cars/id', async (req, res) => {
   try {
