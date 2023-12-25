@@ -3,15 +3,30 @@ import {Typography, Button,  Modal, Card} from 'antd';
 import AddCarForm from '../components/AddCarForm';
 import UpdateCarForm from '../components/UpdateCarForm';
 import CarList from '../components/CarList';
-import { cars as initialCars } from '../data/yourCarsData';
+// import { cars as initialCars } from '../data/yourCarsData';
 
 const { Title } = Typography;
 
 const Home = () => {
 
-    const [cars, setCars] = useState(initialCars);
+    // const [cars, setCars] = useState(initialCars);
+    const [cars, setCars] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedCar, setSelectedCar] = useState(null); 
+
+    // Fetch Cars from Express API when Component mounts
+    useEffect(() => {
+      const fetchCars = async () => {
+        try {
+          const response = await fetch('http://localhost:5000/cars');
+          const data = await response.json();
+          setCars(data);
+        } catch (error) {
+          console.error('Error fetching cars: ', error);
+        }
+      };
+      fetchCars();
+    }, []); // runs only when component mounts
       
       // You can use this 'cars' array in your application for testing or initial data.
     const handleAddCar = (newCar) => {
