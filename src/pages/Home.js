@@ -29,10 +29,26 @@ const Home = () => {
     }, []); // runs only when component mounts
       
       // You can use this 'cars' array in your application for testing or initial data.
-    const handleAddCar = (newCar) => {
-      setCars([...cars, newCar]);
-      setIsModalVisible(false);
-      setSelectedCar(null)
+    const handleAddCar = async (newCar) => {
+      try {
+        const response = await fetch('http://localhost:5000/cars', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+        },
+          body: JSON.stringify(newCar),
+        });
+        if (!response.ok) {
+          throw new Error('Failed to add car');
+        }
+        // assuming server responds with newly created car data
+        const createdCar = await response.json();
+        setCars([...cars, createdCar]);
+        setIsModalVisible(false);
+        setSelectedCar(null)
+      } catch (error) {
+        console.error('Error adding car: ', error)
+      }
      // setShowAddCarForm(false); // Hide the Form after adding a car
     };
 
