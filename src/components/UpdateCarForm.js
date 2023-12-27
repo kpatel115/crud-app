@@ -1,20 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Select, Typography } from 'antd';
 
 const { Option } = Select;
 
-const UpdateCarForm = ({ onSubmit }) => {
-  const onFinish = (values) => {
+const UpdateCarForm = ({ onSubmit, initialData, carId }) => {
+
+  const [formData, setFormData] = useState(initialData);
+  
+
+  useEffect(() => {
+    setFormData(initialData)
+  },[initialData]);
+
+  const handleFormChange = (changedValues, allValues) => {
+    setFormData(allValues);
+  };
+
+
+  const handleFormSubmit = () => {
     // Call the onSubmit function with the form values
-    onSubmit(values);
+    onSubmit(carId, formData);
   };
 
   return (
     <div>
       <Typography.Title level={3}>Update the Car</Typography.Title>
       <Form
+        layout='vertical'
+        initialValues={initialData}
+        onValuesChange={handleFormChange}
+        onFinish={handleFormSubmit}
         name="updateCarForm"
-        onFinish={onFinish}
+        // handleFormSubmit={onfinish}
+        //onfinish = {onfinish}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 12 }}
       >

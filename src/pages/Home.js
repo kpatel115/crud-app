@@ -52,22 +52,67 @@ const Home = () => {
      // setShowAddCarForm(false); // Hide the Form after adding a car
     };
 
-    const handleUpdateCar = (updatedCar) => {
-      const updatedCars = cars.map((car) => 
-      car === selectedCar ? { ...car, ...updatedCar } : car );
+    const handleUpdateCar = async (carId,updatedCar) => {
+      try{
+        if (!carId) {
+          console.error('Invalid carId:', carId);
+        }
+        const response = await fetch(`http://localhost:5000/cars/${carId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+        },
+          body: JSON.stringify(updatedCar),
+        });
+      
+      if (!response.ok) {
+        throw new Error('Failed to update car');
+      }
 
-      setCars(updatedCars);
-      setIsModalVisible(false);
-      setSelectedCar(null)
-    };
 
-    const handleDeleteCar = () => {
-      console.log('Deleting Car: ', selectedCar);
-      const updatedCars = cars.filter((car) => car !== selectedCar);
+      const editedCar = await response.json();
+      const updatedCars = cars.map((car) => car._id === carId ? {...car, editedCar} : car);
+
       setCars(updatedCars);
       setIsModalVisible(false);
       setSelectedCar(null);
+      window.location.reload();
+
+      } catch (error) {
+        console.error('Error updating car: ', error)
+      // }
+
+
+      // const updatedCars = cars.map((car) => 
+      // car === selectedCar ? { ...car, ...updatedCar } : car );
+
+      // setCars(updatedCars);
+      // setIsModalVisible(false);
+      // setSelectedCar(null)
+    }};
+
+    const handleDeleteCar = async (carId) => {
+      try {
+        if (!carId) {
+          console.error('Invalid carId:', carId);
+        }
+        const response = await fetch(`http://localhost:5000/cars/${carId}`, {
+          method: 'DELETE',
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to delete car');
+        }
+        console.log('Deleting Car:', carId);
+       const updatedCars = cars.filter((car) => car._id !== carId);
+
+        setCars(updatedCars);
+        setIsModalVisible(false);
+        setSelectedCar(updatedCars);
+    } catch (error) {
+        console.error('Error deleting car: ', error);
     }
+  };
 
 
     const { Meta } = Card;
@@ -106,7 +151,7 @@ const Home = () => {
 
             {/* Conditionally render AddCarForm or UpdateCarForm based on selectedCar */}
               {selectedCar ? (
-                <UpdateCarForm onSubmit={handleUpdateCar} initialData={selectedCar} />
+                <UpdateCarForm onSubmit={handleUpdateCar} initialData={selectedCar} carId={selectedCar._id} />
                 ) : (
                 <AddCarForm onSubmit={handleAddCar} />
                 )
@@ -127,9 +172,10 @@ const Home = () => {
             onDelete={(car) => {
               if (window.confirm(`Are you sure you want to delete ${car.make} ${car.model}?` )) {
                 setSelectedCar(car);
-                handleDeleteCar();
+                handleDeleteCar(car._id);
               }
             }} />
+            {/* Alternative way - checking to see if able to update using car id instead of using CarList COmponenet */}
 
             {/* <div style={{ display: 'flex', flexWrap: 'wrap',justifyContent:'center' }}>
               {cars.map((car, index) => (

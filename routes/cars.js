@@ -49,11 +49,14 @@ router.get('/cars/:id', async (req, res) => {
 // Update
 router.put('/cars/:id', async (req, res) => {
   try {
-    const updatedCar = await Car.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedCar) {
+    const { id } = req.params;
+    const updatedCar = req.body;
+
+    const updatedCarResult = await Car.findByIdAndUpdate(id,  updatedCar, { new: true });
+    if (!updatedCarResult) {
       return res.status(404).json({ error: 'Car not able to updated rawr xd ;< not mk' });
     }
-    res.json(updatedCar);
+    res.json(updatedCarResult);
   } catch (error) {
     console.error('Error updating car by ID: ', error);
     res.status(500).json({ error: 'Internal Server Error' });
