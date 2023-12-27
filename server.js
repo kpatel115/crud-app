@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors')
 const router = require('./routes/cars')
-
+const mongoURI = process.env.MONGO_URI;
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 // MongoDB connection
 
-const mongoURI = 'mongodb+srv://kpatel114:R7tvHnASCDmCJToZ@carcollection.chb2apw.mongodb.net/CarCollection?retryWrites=true&w=majority'
+//const mongoURI = 'mongodb+srv://kpatel114:R7tvHnASCDmCJToZ@carcollection.chb2apw.mongodb.net/CarCollection?retryWrites=true&w=majority'
 
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
